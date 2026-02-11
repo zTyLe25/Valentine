@@ -1,48 +1,147 @@
-<script>
-// Crear estrellas
-const starsContainer = document.getElementById('stars');
-for (let i = 0; i < 80; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.animationDuration = (Math.random() * 2 + 1) + 's';
-    starsContainer.appendChild(star);
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un pequeño lugar para nosotros</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif}
+
+body{
+background:radial-gradient(circle at top,#1a1a2e,#000);
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+height:100vh;
+overflow:hidden;
+text-align:center;
+padding:20px;
 }
 
-// Mostrar “Niño… Niña…” después de cargar
-const typingEl = document.getElementById('typing');
+.screen{max-width:420px;width:100%;animation:fadeIn 1.5s ease}
 
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        typingEl.textContent = "Niño… Niña…";
-    }, 600);
+h1,h2,p{margin-bottom:15px}
+
+button{
+background:#ff4d6d;
+border:none;
+color:white;
+padding:12px 18px;
+border-radius:12px;
+margin:8px;
+font-size:15px;
+cursor:pointer;
+transition:.2s;
+}
+
+button:hover{transform:scale(1.08);background:#ff758f}
+
+.hidden{display:none}
+
+.heart{font-size:60px;animation:beat 1s infinite;margin-bottom:20px}
+
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.stars{position:absolute;width:100%;height:100%;top:0;left:0;z-index:-1}
+.star{position:absolute;width:2px;height:2px;background:white;animation:twinkle 2s infinite ease-in-out alternate}
+@keyframes twinkle{from{opacity:.2}to{opacity:1}}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<!-- Pantalla 1 -->
+<div class="screen" id="screen1">
+<h2>Hay historias que empiezan con una palabra…</h2>
+<h1 id="typing"></h1>
+<button onclick="nextScreen(2)">Toca aquí</button>
+</div>
+
+<!-- Pantalla 2 -->
+<div class="screen hidden" id="screen2">
+<div class="heart">❤️</div>
+<p>
+Desde que llegaste, mis días tienen más paz,<br>
+más oración…<br>
+y más amor.
+</p>
+<button onclick="nextScreen(3)">Continuar</button>
+</div>
+
+<!-- Pantalla 3 -->
+<div class="screen hidden" id="screen3">
+<h2>Elige un pedacito de nosotros</h2>
+<button onclick="showMessage('momentos')">💬 Nuestros momentos</button>
+<button onclick="showMessage('fe')">🙏 Nuestra fe</button>
+<button onclick="showMessage('sentir')">❤️ Lo que siento por ti</button>
+<p id="message" style="margin-top:20px"></p>
+<button id="finalBtn" class="hidden" onclick="nextScreen(4)">No presiones si no estás lista…</button>
+</div>
+
+<!-- Pantalla final -->
+<div class="screen hidden" id="screen4">
+<h2>Pero yo sí estoy listo…</h2>
+<p>
+Para seguir conociéndote,<br>
+cuidarte,<br>
+y ver hasta dónde Dios quiere llevarnos. 💫
+</p>
+<h1>Feliz 14 de febrero, Emeli Nayeli Lopez Benjamin ❤️</h1>
+</div>
+
+<script>
+// ⭐ Crear estrellas
+const starsContainer=document.getElementById('stars');
+for(let i=0;i<80;i++){
+const star=document.createElement('div');
+star.className='star';
+star.style.top=Math.random()*100+'%';
+star.style.left=Math.random()*100+'%';
+star.style.animationDuration=(Math.random()*2+1)+'s';
+starsContainer.appendChild(star);
+}
+
+// ✨ Mostrar “Niño… Niña…” seguro en iPhone
+const typingEl=document.getElementById('typing');
+
+window.addEventListener('load',()=>{
+setTimeout(()=>{
+typingEl.textContent="Niño… Niña…";
+},600);
 });
 
-// Cambiar pantallas
-function nextScreen(num) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-    document.getElementById('screen' + num).classList.remove('hidden');
+// 🔀 Cambiar pantallas
+function nextScreen(num){
+document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+document.getElementById('screen'+num).classList.remove('hidden');
 }
 
-// Mostrar mensajes
-function showMessage(type) {
-    const msg = document.getElementById('message');
-    const btn = document.getElementById('finalBtn');
+// 💬 Mostrar mensajes
+function showMessage(type){
+const msg=document.getElementById('message');
+const btn=document.getElementById('finalBtn');
 
-    if (type === 'momentos') {
-        msg.innerHTML = "‘Te quiero muchísimo.’<br>‘Dios te bendiga.’<br>‘Descansa, Niño.’ 💬";
-        btn.classList.remove('hidden');
-    }
+if(type==='momentos'){
+msg.innerHTML="‘Te quiero muchísimo.’<br>‘Dios te bendiga.’<br>‘Descansa, Niño.’ 💬";
+btn.classList.remove('hidden');
+}
 
-    if (type === 'fe') {
-        msg.innerHTML = "Si Dios nos permitió encontrarnos, no fue casualidad…<br>fue propósito. 🙏";
-        btn.classList.remove('hidden');
-    }
+if(type==='fe'){
+msg.innerHTML="Si Dios nos permitió encontrarnos, no fue casualidad…<br>fue propósito. 🙏";
+btn.classList.remove('hidden');
+}
 
-    if (type === 'sentir') {
-        msg.innerHTML = "No sé qué traerá el mañana…<br>pero hoy sé que me haces muy feliz. ❤️";
-        btn.classList.remove('hidden');
-    }
+if(type==='sentir'){
+msg.innerHTML="No sé qué traerá el mañana…<br>pero hoy sé que me haces muy feliz. ❤️";
+btn.classList.remove('hidden');
+}
 }
 </script>
+
+</body>
+</html>
