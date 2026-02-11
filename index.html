@@ -6,6 +6,13 @@
 <title>Un pequeño lugar para nosotros</title>
 
 <style>
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif}
 
 body{
@@ -58,7 +65,8 @@ button:hover{transform:scale(1.08);background:#ff758f}
 <!-- Pantalla 1 -->
 <div class="screen" id="screen1">
 <h2>Hay historias que empiezan con una palabra…</h2>
-<h1 id="typing"></h1>
+<h3 id="typing">... O respondiendo un mensaje en Instagram.</h3>
+<h1></h1>
 <button onclick="nextScreen(2)">Toca aquí</button>
 </div>
 
@@ -66,32 +74,52 @@ button:hover{transform:scale(1.08);background:#ff758f}
 <div class="screen hidden" id="screen2">
 <div class="heart">❤️</div>
 <p>
-Desde que llegaste, mis días tienen más paz,<br>
-más oración…<br>
-y más amor.
+Sabes, desde que llegaste, mis días tienen más adrenalina,<br>
+pero también más oración…<br>
+y mucho más amor.
 </p>
 <button onclick="nextScreen(3)">Continuar</button>
 </div>
 
 <!-- Pantalla 3 -->
 <div class="screen hidden" id="screen3">
-<h2>Elige un pedacito de nosotros</h2>
-<button onclick="showMessage('momentos')">💬 Nuestros momentos</button>
+<h2>Hoy te doy 3 opciones</h2>
 <button onclick="showMessage('fe')">🙏 Nuestra fe</button>
+<button onclick="showMessage('momentos')">💬 Mis Pensamientos</button>
 <button onclick="showMessage('sentir')">❤️ Lo que siento por ti</button>
 <p id="message" style="margin-top:20px"></p>
-<button id="finalBtn" class="hidden" onclick="nextScreen(4)">No presiones si no estás lista…</button>
+<button id="finalBtn" class="hidden" onclick="nextScreen(4)">¡No presiones si no estás lista!…</button>
 </div>
 
 <!-- Pantalla final -->
 <div class="screen hidden" id="screen4">
-<h2>Pero yo sí estoy listo…</h2>
+<h2>Si tu estas lista, pues yo también estoy listo…</h2>
 <p>
 Para seguir conociéndote,<br>
-cuidarte,<br>
+para seguir tratando de cuidarte,<br>
 y ver hasta dónde Dios quiere llevarnos. 💫
 </p>
-<h1>Feliz 14 de febrero, Emeli Nayeli Lopez Benjamin ❤️</h1>
+<h3>Feliz día del Amor y la Amistad, Mi Niña</h3>
+<h2>Te Quiero Mucho.</h2>
+<h1>❤️</h1>
+
+<p style="margin-top:20px; font-size:14px; opacity:0.85;">
+    Esta canción me recordó a ti… 🎧💖
+</p>
+
+<a href="https://open.spotify.com/intl-es/track/7gUJ7lxBwciZpkohIRt5ph?si=afbcde68bf3949eb" target="_blank" style="text-decoration:none;">
+    <button style="
+        background: linear-gradient(135deg, #ff4d6d, #ff758f);
+        box-shadow: 0 6px 18px rgba(255, 77, 109, 0.4);
+        font-weight: 600;
+        padding: 14px 22px;
+        border-radius: 14px;
+        margin-top: 10px;
+    ">
+        Escuchar en Spotify 🎵
+    </button>
+</a>
+
 </div>
 
 <script>
@@ -106,15 +134,6 @@ star.style.animationDuration=(Math.random()*2+1)+'s';
 starsContainer.appendChild(star);
 }
 
-// ✨ Mostrar “Niño… Niña…” seguro en iPhone
-const typingEl=document.getElementById('typing');
-
-window.addEventListener('load',()=>{
-setTimeout(()=>{
-typingEl.textContent="Niño… Niña…";
-},600);
-});
-
 // 🔀 Cambiar pantallas
 function nextScreen(num){
 document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
@@ -127,7 +146,7 @@ const msg=document.getElementById('message');
 const btn=document.getElementById('finalBtn');
 
 if(type==='momentos'){
-msg.innerHTML="‘Te quiero muchísimo.’<br>‘Dios te bendiga.’<br>‘Descansa, Niño.’ 💬";
+msg.innerHTML="‘Te quiero muchísimo.’<br>‘Te quiero ver creciendo.’<br>‘Y deseo que Dios siempre te bendiga.’ 💬";
 btn.classList.remove('hidden');
 }
 
@@ -141,6 +160,31 @@ msg.innerHTML="No sé qué traerá el mañana…<br>pero hoy sé que me haces mu
 btn.classList.remove('hidden');
 }
 }
+// 💖 Lluvia de corazones en la pantalla final
+function startHeartsRain() {
+    for (let i = 0; i < 25; i++) {
+        const heart = document.createElement("div");
+        heart.textContent = "💖";
+        heart.style.position = "fixed";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "-20px";
+        heart.style.fontSize = Math.random() * 20 + 20 + "px";
+        heart.style.animation = "fall 3s linear forwards";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 3000);
+    }
+}
+
+// Activar cuando entra a la pantalla final
+const originalNextScreen = nextScreen;
+nextScreen = function(num) {
+    originalNextScreen(num);
+
+    if (num === 4) {
+        startHeartsRain();
+    }
+};
 </script>
 
 </body>
